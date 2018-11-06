@@ -1,3 +1,4 @@
+#Hier wordt het tekst bestand ingelezen
 import NS_Monteur
 
 infile = open("NS_Monteur_Monteurslijst","r")

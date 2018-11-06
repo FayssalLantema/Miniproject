@@ -1,3 +1,4 @@
+#Hier wordt de telegram bot gebruikt
 import telepot
 
 bot = telepot.Bot("635183711:AAHNPw-eMij4zJGZuG0OZNWdtquLgrRj5RA")

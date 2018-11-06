@@ -1,3 +1,4 @@
+#Hier wordt een class gemaakt voor de monteurs
 class monteur:
     def __init__(self, voornaam, achternaam, adres, beschikbaar, chat_id):
         self.voornaam = voornaam

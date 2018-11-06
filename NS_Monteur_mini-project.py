@@ -1,3 +1,4 @@
+#Hier wordt alles geimporteerd
 import requests
 import xmltodict
 import time
@@ -15,16 +16,19 @@ ns_api_xml = xmltodict.parse(ns_api_response.text)
 ns_api_stations = ns_api_xml["Stations"]["Station"]
 
 def tijd(uur):
+#Bepaald of het ochtend of avond is
     if uur >= 18 and uur <= 24 or uur >= 0 and uur <= 8:
         return True
     return False
 
+#Wat er gebeurt als er op de knop wordt gedrukt:
 def clicked():
 
     defect_station = stationentry.get()
     avond = str(tijd(int(time.strftime("%H"))))
     code = codeentry.get()
 
+#De gegevens van de stations worden opgehaald
     for x in range(0,len(ns_api_stations)):
 
         ns_api_namen = ns_api_stations[x]["Namen"]
@@ -47,6 +51,7 @@ def clicked():
     defect_tot_monteur_afstanden = list()
     defect_tot_monteur_dict = dict()
 
+#De afstand van het station tot elke monteur wordt in een list gestopt en gesorteerd
     for monteur in Monteurs.monteurs:
         mapquest_api_route_response = requests.get(mapquest_api_route_url + defect_station_locatie + "&to=" + monteur.adres)
         mapquest_api_route_xml = xmltodict.parse(mapquest_api_route_response.text)
@@ -56,6 +61,7 @@ def clicked():
 
     defect_tot_monteur_afstanden.sort()
 
+#Hier wordt een bericht opgesteld naar de dichtsbijzijnde monteur
     for x in range(0, len(defect_tot_monteur_afstanden)):
         for y in defect_tot_monteur_dict:
             if defect_tot_monteur_dict[y] == defect_tot_monteur_afstanden[x] and avond == y.beschikbaar:
@@ -72,37 +78,37 @@ def clicked():
                                                                                                                                     defect_station_provincie))
                 return
 
-
+#Dit is de configuratie van tkinter
 root = Tk()
 
 root.configure(background="#FCC63F")
 root.title("Wachtdienst NS")
 
+
 textlabel = Label(master=root,
                  text='Op welk station is er een defect?',
-                 font=('Calibri',20),
+                 font=('Times New Roman',20),
                  background="#FCC63F")
 
 codelabel = Label(master=root,
                   text="Wat is de code van de kapotte kaartjesautomaat?",
-                  font=("Calibri",20),
+                  font=("Times New Roman",20),
                   background="#FCC63F")
 
 stationlabel = Label(master=root,
                      text="",
-                     font=('Calibri',20),
+                     font=('Times New Roman',20),
                      background="#FCC63F")
 
 stationentry = Entry(master=root)
 codeentry = Entry(master=root)
 button = Button(master=root, text="Bevestigen", command=clicked)
 
-
 textlabel.pack()
 stationentry.pack()
 codelabel.pack()
 codeentry.pack()
-button.pack(pady=10)
+button.pack(pady=15)
 stationlabel.pack()
 
 
